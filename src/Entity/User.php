@@ -25,6 +25,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['user:list','user:item'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
@@ -32,6 +33,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $email = null;
 
     #[ORM\Column]
+    #[Groups(['user:list','user:item'])]
     private array $roles = [];
 
     /**
