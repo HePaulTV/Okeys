@@ -1,0 +1,127 @@
+.text-P {
+    color : #C54749;
+}
+.text-S {
+    color : #E08687;
+}
+
+.text-A {
+    color : #DE5D5F;
+}
+
+.text-B {
+    color : #2b2424;
+}
+
+.text-W {
+  color:white;
+}
+
+.background-P {
+  background-color: #C54749 ;
+}
+
+.background-A {
+  background-color: #DE5D5F ;
+}
+
+.background-S {
+  background-color: #E08687 ;
+}
+
+.background-w {
+  background-color: #FFFFFF ;
+}
+
+.montserrat100 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.montserrat200 {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 200;
+    font-style: normal;
+  }
+
+  .montserrat300 {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+  }
+
+  .montserrat400 {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  .montserrat500 {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+  }
+
+  .montserrat600 {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+  }
+
+  .montserrat700 {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  .montserrat800 {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 800;
+    font-style: normal;
+  }
+
+  .montserrat900 {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 900;
+    font-style: normal;
+  }
+
+  .climatecrisis {
+    font-family: 'Climate Crisis', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+
+  .navbar {
+    padding: 0;
+    border : solid 0px rgb(218, 218, 218)
+  }
+ /* Effet de survol (hover) pour les liens de la navbar */
+.navbar-nav .nav-link:hover {
+  color: #FFFFFF; /* Couleur du texte au survol */
+  background-color: #DE5D5F;
+  border-radius: 50px; /* Couleur du fond au survol */
+}
+
+/* Style des liens du dropdown au survol */
+.navbar-nav .dropdown-menu a:hover {
+  color: #FFFFFF; /* Couleur du texte au survol du dropdown */
+  background-color: #DE5D5F;
+  border-radius: 50px; /* Couleur du fond au survol du dropdown */
+}
+
+.card {
+  transition: transform 0.3s ease; /* Ajoute une transition fluide de 0.3 secondes */
+}
+
+.card:hover {
+  transform: scale(1.05); /* Augmente la taille de la carte au survol */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Ajoute une ombre légère au survol */
+}
+
+/* Style facultatif pour pointer sur les cartes au survol */
+.card:hover {
+  cursor: pointer;
+}

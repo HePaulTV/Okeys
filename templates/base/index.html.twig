@@ -1,7 +1,56 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{parent()}}Accueil{% endblock %}
+{% block title %}{{ parent() }}Accueil{% endblock %}
 
 {% block body %}
-    <h1 class="text-center fw-bold">Accueil</h1>
-{% endblock %} 
+<div class="container-fluid background-P">
+  <div class="row">
+    <div class="col-md-7 text-center ps-5 d-flex align-items-center">
+      <!-- Contenu de la première colonne -->
+      <p class="display-2 climatecrisis text-W">La solution de l'immobilier</p>
+    </div>
+    <div class="col-md-5 pb-5 pt-4 mt-4 pe-5 text-center d-flex align-items-center">
+      <!-- Contenu de la deuxième colonne -->
+      <img src="{{ asset('images/vente.png') }}" class="img-fluid" style="max-width: 60%;" alt="Illustration"/>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid mt-5 pt-5 px-5 pb-5">
+  <div class="row align-items-stretch">
+      <!-- Colonne pour l'image -->
+      <div class="col-md-3">
+          <img src="{{ asset('images/reflexion.png') }}" alt="Image" class="img-fluid">
+      </div>
+
+      <!-- Colonne pour la première carte d'offre -->
+      <div class="col-md-3 d-flex">
+          <div class="card border-0 flex-fill">
+              <div class="card-body background-S rounded-5">
+                  <h5 class="card-title text-center climatecrisis pt-3 pb-4 text-B display-3">Acheter</h5>
+                  <p class="card-text text-center text-W px-5 montserrat900 display-6">Nos agents sont toujours prêts pour vous aider à acheter le bien de vos rêves</p>
+              </div>
+          </div>
+      </div>
+
+      <div class="col-md-3 d-flex">
+        <div class="card border-0 flex-fill">
+            <div class="card-body background-S rounded-5">
+                <h5 class="card-title text-center climatecrisis pt-3 pb-4 text-B display-3">Louer</h5>
+                <p class="card-text text-center text-W montserrat900 display-6">Identifions les besoins que vous recherchez et trouvons votre futur habitat de vos envies</p>
+            </div>
+        </div>
+    </div>
+
+      <!-- Colonne pour la deuxième carte d'offre -->
+      <div class="col-md-3 d-flex">
+          <div class="card border-0 flex-fill">
+              <div class="card-body background-S rounded-5 border-0">
+                  <h5 class="card-title text-center climatecrisis pt-3 pb-4 text-B display-3">Vendre</h5>
+                  <p class="card-text text-center text-W montserrat900 display-6">Assurez-vous une vente en bon termes et avantageuse</p>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+{% endblock %}
