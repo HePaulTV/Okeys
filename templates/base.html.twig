@@ -44,7 +44,7 @@
                     {% endif %}
                     {% if is_granted('IS_AUTHENTICATED_FULLY')%}
                         <li class="nav-item">
-                            <a class="nav-link text-B montserrat300" href="{{ path('app_logout') }}">Logout</a>
+                            <a class="nav-link text-B montserrat300 text-danger" href="{{ path('app_logout') }}">Se déconnecter</a>
                         </li>
                     {% else %}
                         <li class="nav-item dropdown w-100">
