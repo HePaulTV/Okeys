@@ -13,26 +13,18 @@ class Contact
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 30)]
-    private $nom;
-
     #[ORM\Column(type: 'string', length: 100)]
     private $sujet;
-
-    #[ORM\Column(type: 'string', length: 100)]
-    private $email;
 
     #[ORM\Column(type: 'text')]
     private $message;
 
+    #[ORM\ManyToOne(inversedBy: 'contacts')]
+    private ?User $user = null;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getNom(): ?string
-    {
-        return $this->nom;
     }
 
     public function setNom(string $nom): self
@@ -54,17 +46,6 @@ class Contact
         return $this;
     }
 
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
-    }
 
     public function getMessage(): ?string
     {
@@ -74,6 +55,18 @@ class Contact
     public function setMessage(string $message): self
     {
         $this->message = $message;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

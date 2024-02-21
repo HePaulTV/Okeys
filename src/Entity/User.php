@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -51,6 +53,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     #[Groups(['user:list','user:item'])]
     private ?string $prenom = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Annonce::class)]
+    private Collection $annonces;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Contact::class)]
+    private Collection $contacts;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Visite::class)]
+    private Collection $visites;
+
+    #[ORM\OneToMany(mappedBy: 'agent', targetEntity: Visite::class)]
+    private Collection $visitesagent;
+
+    public function __construct()
+    {
+        $this->annonces = new ArrayCollection();
+        $this->contacts = new ArrayCollection();
+        $this->visites = new ArrayCollection();
+        $this->visitesagent = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -142,6 +164,126 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPrenom(string $prenom): static
     {
         $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Annonce>
+     */
+    public function getAnnonces(): Collection
+    {
+        return $this->annonces;
+    }
+
+    public function addAnnonce(Annonce $annonce): static
+    {
+        if (!$this->annonces->contains($annonce)) {
+            $this->annonces->add($annonce);
+            $annonce->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnnonce(Annonce $annonce): static
+    {
+        if ($this->annonces->removeElement($annonce)) {
+            // set the owning side to null (unless already changed)
+            if ($annonce->getUser() === $this) {
+                $annonce->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Contact>
+     */
+    public function getContacts(): Collection
+    {
+        return $this->contacts;
+    }
+
+    public function addContact(Contact $contact): static
+    {
+        if (!$this->contacts->contains($contact)) {
+            $this->contacts->add($contact);
+            $contact->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContact(Contact $contact): static
+    {
+        if ($this->contacts->removeElement($contact)) {
+            // set the owning side to null (unless already changed)
+            if ($contact->getUser() === $this) {
+                $contact->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Visite>
+     */
+    public function getVisites(): Collection
+    {
+        return $this->visites;
+    }
+
+    public function addVisite(Visite $visite): static
+    {
+        if (!$this->visites->contains($visite)) {
+            $this->visites->add($visite);
+            $visite->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVisite(Visite $visite): static
+    {
+        if ($this->visites->removeElement($visite)) {
+            // set the owning side to null (unless already changed)
+            if ($visite->getUser() === $this) {
+                $visite->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Visite>
+     */
+    public function getVisitesagent(): Collection
+    {
+        return $this->visitesagent;
+    }
+
+    public function addVisitesagent(Visite $visitesagent): static
+    {
+        if (!$this->visitesagent->contains($visitesagent)) {
+            $this->visitesagent->add($visitesagent);
+            $visitesagent->setAgent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVisitesagent(Visite $visitesagent): static
+    {
+        if ($this->visitesagent->removeElement($visitesagent)) {
+            // set the owning side to null (unless already changed)
+            if ($visitesagent->getAgent() === $this) {
+                $visitesagent->setAgent(null);
+            }
+        }
 
         return $this;
     }

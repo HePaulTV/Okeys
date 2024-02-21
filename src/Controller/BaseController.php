@@ -27,19 +27,53 @@ class BaseController extends AbstractController
         $contact = new Contact();
         $form = $this->createForm(ContactType::class, $contact);
 
-        if($request->isMethod('POST')){
+        if ($request->isMethod('POST')) {
             $form->handleRequest($request);
-            if ($form->isSubmitted()&&$form->isValid()){   
+            if ($form->isSubmitted() && $form->isValid()) {   
+                // Récupération de l'objet utilisateur actuel
+                $user = $this->getUser();
+
+                // Vérifiez si l'utilisateur est connecté et est un objet User
+                if ($user instanceof \App\Entity\User) {
+                    // Association de l'utilisateur avec le contact
+                    $contact->setUser($user);
+                } else {
+                    // Gérer le cas où l'utilisateur n'est pas connecté ou n'est pas un objet User valide
+                    // Vous pouvez rediriger vers la page de connexion ou afficher un message d'erreur
+                }
+                
+                //$contact->setDateEnvoi(new \Datetime());
+
                 $entityManagerInterface->persist($contact);
                 $entityManagerInterface->flush();
-                
-                $this->addFlash('notice','Message envoyé');
+
                 return $this->redirectToRoute('contact');
             }
         }
 
         return $this->render('base/contact.html.twig', [
             'form' => $form->createView()
+        ]);
+    }
+    #[Route('/acheter', name: 'acheter')]
+    public function acheter(): Response
+    {
+        return $this->render('base/acheter.html.twig', [
+            
+        ]);
+    }
+    #[Route('/louer', name: 'louer')]
+    public function louer(): Response
+    {
+        return $this->render('base/louer.html.twig', [
+            
+        ]);
+    }
+    #[Route('/recherche', name: 'recherche')]
+    public function recherche(): Response
+    {
+        return $this->render('base/recherche.html.twig', [
+            
         ]);
     }
 }
