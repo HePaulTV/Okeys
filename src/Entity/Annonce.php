@@ -7,6 +7,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\Get; 
+use ApiPlatform\Metadata\GetCollection; 
+
+use ApiPlatform\Metadata\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups; 
+
+#[ApiResource(operations:[new Get(normalizationContext:['groups'=>'annonce:item']),
+                          new GetCollection(normalizationContext:['groups'=>'annonce:list'])])]
 
 #[ORM\Entity(repositoryClass: AnnonceRepository::class)]
 class Annonce
@@ -14,48 +22,61 @@ class Annonce
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['annonce:list','annonce:item'])]
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'annonces')]
+    #[Groups(['annonce:list','annonce:item'])]
     private ?User $user = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['annonce:list','annonce:item'])]
     private ?string $titre = null;
 
     #[ORM\Column(length: 255)]
     private ?string $image = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups(['annonce:list','annonce:item'])]
     private ?string $description = null;
 
     #[ORM\Column]
+    #[Groups(['annonce:list','annonce:item'])]
     private ?float $prix = null;
 
     #[ORM\Column]
+    #[Groups(['annonce:list','annonce:item'])]
     private ?float $m2 = null;
 
     #[ORM\Column]
+    #[Groups(['annonce:list','annonce:item'])]
     private ?bool $jardin = null;
 
     #[ORM\Column]
+    #[Groups(['annonce:list','annonce:item'])]
     private ?bool $garage = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['annonce:list','annonce:item'])]
     private ?string $commune = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['annonce:list','annonce:item'])]
     private ?string $region = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['annonce:list','annonce:item'])]
     private ?string $departement = null;
 
     #[ORM\OneToMany(mappedBy: 'annonce', targetEntity: Type::class)]
+    //#[Groups(['annonce:list','annonce:item'])]
     private Collection $types;
 
     #[ORM\ManyToOne(inversedBy: 'annonces')]
     private ?Type $type = null;
 
     #[ORM\OneToMany(mappedBy: 'annonce', targetEntity: Visite::class)]
+    #[Groups(['annonce:list','annonce:item'])]
     private Collection $visites;
 
     public function __construct()
