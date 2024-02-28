@@ -18,34 +18,20 @@
 
 <div class="container-fluid mt-5 pt-5 px-5 pb-5">
   <div class="row align-items-stretch">
-      <!-- Colonne pour la première carte d'offre -->
-      <div class="col-md-4 d-flex">
-          <div class="card border-0 flex-fill">
-              <div class="card-body background-S rounded-5">
-                  <h5 class="card-title text-center climatecrisis pt-3 pb-4 text-B display-5">Maison 1</h5>
-                  <p class="card-text text-center text-W px-2 montserrat900 display-6">Attributs : <br/> Description : </p>
-              </div>
+    {% for annonce in annonces %}
+    <div class="col-md-4 d-flex">
+      <div class="card border-0 flex-fill">
+        <div class="card-body background-S rounded-5">
+          <h5 class="card-title text-center climatecrisis pt-3 pb-4 text-B display-5">{{ annonce.titre }}</h5>
+          <p class="card-text text-center text-W px-2 montserrat900 display-6">Prix : {{ annonce.prix }} € <br />
+            Description : {{ annonce.description }}</p>
+          <div class="text-center mt-4">
+            <button type="button" class="" >Visiter</button>
           </div>
-      </div>
-
-      <div class="col-md-4 d-flex">
-        <div class="card border-0 flex-fill">
-            <div class="card-body background-S rounded-5">
-                <h5 class="card-title text-center climatecrisis pt-3 pb-4 text-B display-5">Maison 2</h5>
-                <p class="card-text text-center text-W montserrat900 display-6"> Attributs : <br/> Description : </p>
-            </div>
         </div>
       </div>
-
-      <!-- Colonne pour la deuxième carte d'offre -->
-      <div class="col-md-4 d-flex">
-          <div class="card border-0 flex-fill">
-              <div class="card-body background-S rounded-5 border-0">
-                  <h5 class="card-title text-center climatecrisis pt-3 pb-4 text-B display-5">Maison 3</h5>
-                  <p class="card-text text-center text-W montserrat900 display-6">Attributs : <br/> Description : </p>
-              </div>
-          </div>
-      </div>
+    </div>
+    {% endfor %}
   </div>
 </div>
 {% endblock %}

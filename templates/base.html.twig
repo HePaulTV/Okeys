@@ -43,8 +43,17 @@
                         </li>
                     {% endif %}
                     {% if is_granted('IS_AUTHENTICATED_FULLY')%}
+                        {% if is_granted('ROLE_AGENT')%}
+                            <li class="nav-item dropdown w-100">
+                                <a class="nav-link dropdown-toggle text-B montserrat300" data-bs-toggle="dropdown" href="#"
+                                    role="button" aria-haspopup="true" aria-expanded="false">Admin</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="*">Ajout bien</a>
+                                </div>
+                            </li>
+                        {% endif %}
                         <li class="nav-item">
-                            <a class="nav-link text-B montserrat300 text-danger" href="{{ path('app_logout') }}">Se déconnecter</a>
+                            <a class="nav-link text-B montserrat300 text-danger" href="{{ path('app_logout') }}">Déconnexion</a>
                         </li>
                     {% else %}
                         <li class="nav-item dropdown w-100">

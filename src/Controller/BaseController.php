@@ -11,6 +11,8 @@ use App\Entity\Contact;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
+use App\Repository\AnnonceRepository;
+
 class BaseController extends AbstractController
 {
     #[Route('/', name: 'index')]
@@ -70,10 +72,13 @@ class BaseController extends AbstractController
         ]);
     }
     #[Route('/recherche', name: 'recherche')]
-    public function recherche(): Response
+    public function recherche(AnnonceRepository $annonceRepository): Response
     {
+        $annonces = $annonceRepository->findAll();
+
         return $this->render('base/recherche.html.twig', [
-            
+            'annonces' => $annonces,
+
         ]);
     }
 }
