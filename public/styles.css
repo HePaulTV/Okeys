@@ -125,3 +125,12 @@
 .card:hover {
   cursor: pointer;
 }
+
+.modal.fade .modal-dialog {
+  transition: transform 0.3s ease-out;
+  transform: translateY(-100%);
+}
+
+.modal.show .modal-dialog {
+  transform: translateY(0);
+}

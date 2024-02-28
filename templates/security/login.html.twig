@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}{{ parent() }}Connectez-vous{% endblock %}
 
 {% block body %}
   <body class="background-S">
@@ -35,7 +35,7 @@
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
                 <button class="btn btn-lg btn-primary btn-block background-P" type="submit">
-                    Sign in
+                    Je me connecte
                 </button>
               </div>
             </div>

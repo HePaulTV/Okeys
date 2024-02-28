@@ -81,4 +81,12 @@ class BaseController extends AbstractController
 
         ]);
     }
+
+    #[Route('/estimation', name: 'estimation')]
+    public function estimation(AnnonceRepository $annonceRepository): Response
+    {
+        return $this->render('base/estimation.html.twig', [
+
+        ]);
+    }
 }
