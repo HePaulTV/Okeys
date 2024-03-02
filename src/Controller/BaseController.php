@@ -88,7 +88,7 @@ class BaseController extends AbstractController
 
         ]);
     }
-    #[Route('/visite', name: 'visite')]
+    /*#[Route('/visite', name: 'visite')]
     public function visite(Request $request, EntityManagerInterface $entityManagerInterface): Response
     {
         $visite = new Visite();
@@ -120,7 +120,46 @@ class BaseController extends AbstractController
         return $this->render('base/visite.html.twig', [
             'form' => $form->createView()
         ]);
+    }*/
+
+    #[Route('/visite/{id}', name: 'visite')]
+    public function visite(Request $request, EntityManagerInterface $entityManagerInterface, int $id): Response
+    {
+        $idAnnonce=$entityManagerInterface->getRepository(Annonce::class)->find($id);
+
+        $visite = new Visite();
+        $form = $this->createForm(VisiteType::class, $visite, ['annonce_id' => $id,]);
+
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {   
+                // Récupération de l'objet utilisateur actuel
+                $user = $this->getUser();
+
+                // Vérifiez si l'utilisateur est connecté et est un objet User
+                if ($user instanceof \App\Entity\User) {
+                    // Association de l'utilisateur avec le contact
+                    $visite->setUser($user);
+                } else {
+                    // Gérer le cas où l'utilisateur n'est pas connecté ou n'est pas un objet User valide
+                    // Vous pouvez rediriger vers la page de connexion ou afficher un message d'erreur
+                }
+                
+
+                $entityManagerInterface->persist($visite);
+                $entityManagerInterface->flush();
+
+                return $this->redirectToRoute('visite');
+            }
+        }
+
+        return $this->render('base/visite.html.twig', [
+            'idAnnonce' => $idAnnonce,
+            'form' => $form->createView()
+        ]);
     }
+
+
     #[Route('/ajoutbien', name: 'ajoutbien')]
     public function ajoutbien(Request $request, EntityManagerInterface $entityManagerInterface): Response
     {

@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	{{parent()}}Visite
+	{{ parent() }}Visite
 {% endblock %}
 
 {% block body %}
@@ -14,11 +14,21 @@
   </div>
 </div>
 
-	<div class="container-fluid">
-		<div class="row justify-content-center">
-			<div class="col-10 climatecrisis text-P">
-				{{form(form)}}
-			</div>
+<div class="container-fluid">
+	<div class="row justify-content-center">
+		<div class="col-10 climatecrisis text-P">
+			Titre d'annonce: <p class="text-B">{{ idAnnonce.titre }}</p><br/>
+			Image: <p class="text-B">{{ idAnnonce.image }}</p> <br/>
+			Description: <p class="text-B">{{ idAnnonce.description }}</p> <br/>
+			Prix: <p class="text-B">{{ idAnnonce.prix }} € </p><br/>
+			Surface: <p class="text-B">{{ idAnnonce.m2 }} </p><br/>
+			Jardin: <p class="text-B">{{ idAnnonce.jardin == 1 ? 'Oui' : 'Non' }} </p><br/>
+			Garage: <p class="text-B">{{ idAnnonce.garage == 1 ? 'Oui' : 'Non' }}</p> <br/>
+			Commune: <p class="text-B">{{ idAnnonce.commune }}</p> <br/>
+			Region: <p class="text-B">{{ idAnnonce.region }} </p><br/>
+			Departement: <p class="text-B">{{ idAnnonce.departement }} </p><br/>
+			{{ form(form) }}
 		</div>
 	</div>
+</div>
 {% endblock %}
