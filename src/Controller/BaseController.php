@@ -8,6 +8,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 use App\Form\ContactType;
 use App\Entity\Contact;
+
+use App\Form\VisiteType;
+use App\Entity\Visite;
+
+use App\Form\AjoutBienType;
+use App\Entity\Annonce;
+
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -79,6 +86,72 @@ class BaseController extends AbstractController
         return $this->render('base/recherche.html.twig', [
             'annonces' => $annonces,
 
+        ]);
+    }
+    #[Route('/visite', name: 'visite')]
+    public function visite(Request $request, EntityManagerInterface $entityManagerInterface): Response
+    {
+        $visite = new Visite();
+        $form = $this->createForm(VisiteType::class, $visite);
+
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {   
+                // Récupération de l'objet utilisateur actuel
+                $user = $this->getUser();
+
+                // Vérifiez si l'utilisateur est connecté et est un objet User
+                if ($user instanceof \App\Entity\User) {
+                    // Association de l'utilisateur avec le contact
+                    $visite->setUser($user);
+                } else {
+                    // Gérer le cas où l'utilisateur n'est pas connecté ou n'est pas un objet User valide
+                    // Vous pouvez rediriger vers la page de connexion ou afficher un message d'erreur
+                }
+                
+
+                $entityManagerInterface->persist($visite);
+                $entityManagerInterface->flush();
+
+                return $this->redirectToRoute('visite');
+            }
+        }
+
+        return $this->render('base/visite.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+    #[Route('/ajoutbien', name: 'ajoutbien')]
+    public function ajoutbien(Request $request, EntityManagerInterface $entityManagerInterface): Response
+    {
+        $ajoutbien = new Annonce();
+        $form = $this->createForm(AjoutBienType::class, $ajoutbien);
+
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {   
+                // Récupération de l'objet utilisateur actuel
+                $user = $this->getUser();
+
+                // Vérifiez si l'utilisateur est connecté et est un objet User
+                if ($user instanceof \App\Entity\User) {
+                    // Association de l'utilisateur avec le contact
+                    $ajoutbien->setUser($user);
+                } else {
+                    // Gérer le cas où l'utilisateur n'est pas connecté ou n'est pas un objet User valide
+                    // Vous pouvez rediriger vers la page de connexion ou afficher un message d'erreur
+                }
+                
+
+                $entityManagerInterface->persist($ajoutbien);
+                $entityManagerInterface->flush();
+
+                return $this->redirectToRoute('ajoutbien');
+            }
+        }
+
+        return $this->render('base/ajoutbien.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 }
