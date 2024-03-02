@@ -154,4 +154,11 @@ class BaseController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+    #[Route('/estimation', name: 'estimation')]
+    public function estimation(AnnonceRepository $annonceRepository): Response
+    {
+        return $this->render('base/estimation.html.twig', [
+
+        ]);
+    }
 }
