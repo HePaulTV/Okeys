@@ -51,7 +51,8 @@ class VisiteType extends AbstractType
             },
         ])
         ->add('annonce', HiddenType::class, [
-            'data' => $options['annonce_id'],
+            'data' => $options['data']->getAnnonce()->getId(),
+            'mapped' => false, 
         ])
         ->add('confirmer', SubmitType::class, [
             'attr' => ['class'=> 'btn m-4' ], 
