@@ -134,7 +134,7 @@ class BaseController extends AbstractController
     
         // Créer une nouvelle entité Visite et lui associer l'Annonce récupérée
         $visite = new Visite();
-        $visite->setAnnonce($annonce); // Assurez-vous que l'entité Visite a une méthode setAnnonce()
+        $visite->setAnnonce($annonce);
     
         // Créer le formulaire pour l'entité Visite
         $form = $this->createForm(VisiteType::class, $visite);
@@ -204,6 +204,18 @@ class BaseController extends AbstractController
     {
         return $this->render('base/estimation.html.twig', [
 
+        ]);
+    }
+    #[Route('/profil', name: 'profil')]
+    public function profil(EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+
+        $visiteRepository = $entityManager->getRepository(Visite::class);
+        $visites = $visiteRepository->findBy(['user' => $user]);
+
+        return $this->render('base/profil.html.twig', [
+            'visites' => $visites,
         ]);
     }
 }

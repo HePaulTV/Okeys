@@ -64,9 +64,7 @@ class VisiteType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-        // Configure your form options here
-
-        'annonce_id' => null,
+            'annonce_id' => null,
         ]);
     }
 }

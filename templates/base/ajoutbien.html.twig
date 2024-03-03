@@ -5,20 +5,56 @@
 {% endblock %}
 
 {% block body %}
-<div class="container-fluid background-P">
-  <div class="row">
-    <div class="col-md-5 pb-5 pt-4 mt-4 pe-5 text-center d-flex align-items-center">
-      <!-- Contenu de la première colonne -->
-      <p class="display-2 climatecrisis text-W">Ajout bien</p>
-    </div>
-  </div>
-</div>
+	<div class="container-fluid background-P">
+	<div class="row">
+		<div class="col-md-5 pb-5 pt-4 mt-4 pe-5 text-center d-flex align-items-center">
+		<!-- Contenu de la première colonne -->
+		<p class="display-2 climatecrisis text-W">Ajout bien</p>
+		</div>
+	</div>
+	</div>
 
 	<div class="container-fluid">
 		<div class="row justify-content-center">
 			<div class="col-10 climatecrisis text-P">
-				{{form(form)}}
+				{{ form_start(form, {'attr': {'id': 'monFormulaireAjoutBien'}}) }}
+					{{ form_widget(form) }}
+				{{ form_end(form) }}
 			</div>
 		</div>
 	</div>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			var form = document.getElementById('monFormulaireAjoutBien'); // Assurez-vous que cet ID correspond à l'ID de votre formulaire
+			var isApiCalled = false; // Indicateur pour contrôler la soumission après appel API
+		
+			form.addEventListener('submit', function(e) {
+				if (!isApiCalled) {
+					e.preventDefault(); // Empêcher l'envoi automatique du formulaire
+		
+					var codePostal = document.getElementById('ajout_bien_codePostal').value;
+		
+					fetch(`https://geo.api.gouv.fr/decoupage-administratif/communes?codePostal=${codePostal}`)
+						.then(response => response.json())
+						.then(data => {
+							if (data.length > 0) {
+								var communeName = data[0].nom;
+								document.getElementById('ajout_bien_commune').value = communeName; // Mise à jour du champ commune
+								
+								isApiCalled = true; // Marquer l'appel API comme effectué
+								form.submit(); // Soumettre le formulaire manuellement
+							} else {
+								console.log('Aucune commune trouvée pour ce code postal.');
+								// Ici, ajoutez la logique pour afficher un message d'erreur à l'utilisateur
+							}
+						})
+						.catch(error => {
+							console.error('Erreur lors de l\'appel à l\'API', error);
+							// Ici, ajoutez la logique pour afficher un message d'erreur à l'utilisateur
+						});
+				}
+			});
+		});
+		</script>
 {% endblock %}
