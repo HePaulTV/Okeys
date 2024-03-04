@@ -134,3 +134,21 @@
 .modal.show .modal-dialog {
   transform: translateY(0);
 }
+
+.btn-custom {
+  color: #fff;
+  background-color: #C54749; /* Couleur bleue par défaut */
+  border-color: #C54749;
+  border-radius: 10px;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  transition: background-color 0.5s ease;
+}
+
+.btn-custom:hover {
+  color:#C54749;
+  background-color: #ffffff; /* Couleur bleue plus foncée au survol */
+  border-color: #ffffff;
+}

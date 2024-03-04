@@ -33,11 +33,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Groups(['user:list','user:item','annonce:list','annonce:item'])]
+    #[Groups(['user:list','user:item'])]
     private ?string $email = null;
 
     #[ORM\Column]
-    #[Groups(['user:list','user:item','annonce:list','annonce:item'])]
+    #[Groups(['user:list','user:item'])]
     private array $roles = [];
 
     /**
@@ -47,11 +47,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['user:list','user:item','annonce:list','annonce:item'])]
+    #[Groups(['user:list','user:item'])]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['user:list','user:item','annonce:list','annonce:item'])]
+    #[Groups(['user:list','user:item'])]
     private ?string $prenom = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Annonce::class)]

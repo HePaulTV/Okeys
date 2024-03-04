@@ -9,12 +9,17 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\Get; 
 use ApiPlatform\Metadata\GetCollection; 
-
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups; 
+use ApiPlatform\Doctrine\Orm\Filter\RangeFilter;
+use ApiPlatform\Doctrine\Orm\Filter\BooleanFilter;
 
 #[ApiResource(operations:[new Get(normalizationContext:['groups'=>'annonce:item']),
                           new GetCollection(normalizationContext:['groups'=>'annonce:list'])])]
+
+#[ApiFilter(RangeFilter::class, properties: ['prix','m2'])]
+#[ApiFilter(BooleanFilter::class, properties: ['jardin','garage'])]
 
 #[ORM\Entity(repositoryClass: AnnonceRepository::class)]
 class Annonce
