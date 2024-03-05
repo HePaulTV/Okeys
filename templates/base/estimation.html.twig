@@ -4,32 +4,51 @@
 
 {% block body %}
 <div class="container mt-4">
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title text-B">Estimation de votre bien immobilier</h5>
-            <form id="estimationForm">
-                <div class="mb-3">
-                    <label for="nombrePieces" class="form-label">Nombre de pièces</label>
-                    <input type="number" class="form-control" id="nombrePieces" name="nombrePieces" required>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title text-B">Estimation de votre bien immobilier</h5>
+                    <form id="estimationForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="departement" class="form-label">Département :</label>
+                                <select id="departement" class="form-select">
+                                    <!-- Les options des départements seront chargées ici -->
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="communeInput" class="form-label">Commune :</label>
+                                <input type="text" class="form-control" id="communeInput" placeholder="Commencez à saisir le nom de la commune">
+                                <ul id="communeList" class="list-group mt-2" style="display: none;">
+                                    <!-- Les communes filtrées seront listées ici -->
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="nombrePieces" class="form-label">Nombre de pièces</label>
+                            <input type="number" class="form-control" id="nombrePieces" name="nombrePieces" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="surface" class="form-label">Surface en m²</label>
+                            <input type="number" class="form-control" id="surface" name="surface" required>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="jardin" name="jardin">
+                            <label class="form-check-label" for="jardin">Jardin</label>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="garage" name="garage">
+                            <label class="form-check-label" for="garage">Garage</label>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="fibre" name="fibre">
+                            <label class="form-check-label" for="fibre">Fibre optique</label>
+                        </div>
+                        <button type="submit" class="btn background-P text-W">Calculer l'estimation</button>
+                    </form>
                 </div>
-                <div class="mb-3">
-                    <label for="surface" class="form-label">Surface en m²</label>
-                    <input type="number" class="form-control" id="surface" name="surface" required>
-                </div>
-                <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="jardin" name="jardin">
-                    <label class="form-check-label" for="jardin">Jardin</label>
-                </div>
-                <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="garage" name="garage">
-                    <label class="form-check-label" for="garage">Garage</label>
-                </div>
-                <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="fibre" name="fibre">
-                    <label class="form-check-label" for="fibre">Fibre optique</label>
-                </div>
-                <button type="submit" class="btn background-P text-W">Calculer l'estimation</button>
-            </form>
+            </div>
         </div>
     </div>
 </div>
