@@ -22,6 +22,7 @@ class Type
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['annonce:list','annonce:item'])]
     private ?string $nom = null;
 
     #[ORM\OneToMany(mappedBy: 'type', targetEntity: Annonce::class)]

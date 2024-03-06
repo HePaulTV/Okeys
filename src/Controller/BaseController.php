@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 use App\Form\ContactType;
 use App\Entity\Contact;
@@ -14,6 +15,7 @@ use App\Entity\Visite;
 
 use App\Form\AjoutBienType;
 use App\Entity\Annonce;
+use App\Entity\Images;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -167,38 +169,45 @@ class BaseController extends AbstractController
 
 
     #[Route('/ajoutbien', name: 'ajoutbien')]
-    public function ajoutbien(Request $request, EntityManagerInterface $entityManagerInterface): Response
+    public function ajoutbien(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
+        // Créez un nouvel objet Annonce
         $ajoutbien = new Annonce();
+        
+        // Créez le formulaire avec l'objet Annonce
         $form = $this->createForm(AjoutBienType::class, $ajoutbien);
-
-        if ($request->isMethod('POST')) {
-            $form->handleRequest($request);
-            if ($form->isSubmitted() && $form->isValid()) {   
-                // Récupération de l'objet utilisateur actuel
-                $user = $this->getUser();
-
-                // Vérifiez si l'utilisateur est connecté et est un objet User
-                if ($user instanceof \App\Entity\User) {
-                    // Association de l'utilisateur avec le contact
-                    $ajoutbien->setUser($user);
-                } else {
-                    // Gérer le cas où l'utilisateur n'est pas connecté ou n'est pas un objet User valide
-                    // Vous pouvez rediriger vers la page de connexion ou afficher un message d'erreur
-                }
-                
-
-                $entityManagerInterface->persist($ajoutbien);
-                $entityManagerInterface->flush();
-
-                return $this->redirectToRoute('ajoutbien');
+    
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Traitement des images téléchargées
+            $images = $form->get('images')->getData();
+            foreach ($images as $image) {
+                $imageName = uniqid().'.'.$image->guessExtension();
+                $image->move(
+                    $this->getParameter('file_directory'), // Répertoire de stockage
+                    $imageName
+                );
+    
+                // Créez une nouvelle instance de l'entité Images
+                $imageEntity = new Images();
+                $imageEntity->setNom($imageName);
+                $imageEntity->setAnnonce($ajoutbien);
+    
+                // Enregistrez l'image dans la base de données
+                $entityManager->persist($imageEntity);
             }
+    
+            $entityManager->persist($ajoutbien);
+            $entityManager->flush();
+    
+            return $this->redirectToRoute('ajoutbien');
         }
-
+    
         return $this->render('base/ajoutbien.html.twig', [
             'form' => $form->createView()
         ]);
     }
+
     #[Route('/estimation', name: 'estimation')]
     public function estimation(AnnonceRepository $annonceRepository): Response
     {
@@ -211,11 +220,18 @@ class BaseController extends AbstractController
     {
         $user = $this->getUser();
 
+        // Récupère les visites prévues de l'utilisateur
         $visiteRepository = $entityManager->getRepository(Visite::class);
         $visites = $visiteRepository->findBy(['user' => $user]);
 
+        // Récupère les annonces postées par l'utilisateur
+        $annonceRepository = $entityManager->getRepository(Annonce::class);
+        $annonces = $annonceRepository->findBy(['user' => $user]);
+
         return $this->render('base/profil.html.twig', [
+            'user' => $user, // Assurez-vous de passer l'utilisateur à la vue si nécessaire
             'visites' => $visites,
+            'annonces' => $annonces,
         ]);
     }
 }

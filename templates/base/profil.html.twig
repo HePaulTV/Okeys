@@ -1,33 +1,56 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
-	{{parent()}}Profil
-{% endblock %}
+{% block title %}{{ parent() }}Profil{% endblock %}
 
 {% block body %}
-<div class="container-fluid background-P">
-  <div class="row">
-    <div class="col-md-5 pb-5 pt-4 mt-4 pe-5 text-center d-flex align-items-center">
-      <!-- Contenu de la première colonne -->
-      <p class="display-2 climatecrisis text-W">Profil</p>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="climatecrisis text-P">Profil de {{ user.prenom }} {{ user.nom }}</h2>
+            <p><i class="bi bi-envelope-fill"></i> Email : {{ user.email }}</p>
+            <p><i class="bi bi-shield-shaded"></i> Statut : 
+                {% for role in user.roles %}
+                    {% set roleLabel = '' %}
+                    {% if role == 'ROLE_USER' %}
+                        {% set roleLabel = 'Utilisateur' %}
+                    {% elseif role == 'ROLE_AGENT' %}
+                        {% set roleLabel = 'Agent Immobilier' %}
+                    {% elseif role == 'ROLE_ADMIN' %}
+                        {% set roleLabel = 'Administrateur' %}
+                    {% endif %}
+                    {{ roleLabel }}{% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+        </div>
     </div>
-  </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Mes annonces</h3>
+            <ul class="list-group">
+                {% for annonce in user.annonces %}
+                <li class="list-group-item">
+                    {{ annonce.titre }} à {{ annonce.commune }}, {{ annonce.prix }}€
+                </li>
+                {% else %}
+                <li class="list-group-item">Aucune annonce</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <h3>Mes visites prévues</h3>
+            <ul class="list-group">
+                {% for visite in user.visites %}
+                <li class="list-group-item">
+                    Visite à {{ visite.annonce.titre }} le {{ visite.datetime|date('Y-m-d H:i') }}
+                    {% if visite.agent %}
+                    avec l'agent {{ visite.agent.prenom }} {{ visite.agent.nom }}
+                    {% endif %}
+                </li>
+                {% else %}
+                <li class="list-group-item">Aucune visite prévue</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 </div>
-
-	<div class="container-fluid">
-		<div class="row justify-content-center">
-			<div class="col-10 climatecrisis text-P">
-				<ul>
-					{% for visite in visites %}
-						<li>
-							Visite à {{ visite.annonce.titre }} <br>le {{ visite.datetime|date('Y-m-d H:i') }}<br>
-							{% if visite.agent %}
-								- Agent: {{ visite.agent.nom }}<br><br>
-							{% endif %}
-						</li>
-					{% endfor %}
-				</ul>
-			</div>
-		</div>
-	</div>
 {% endblock %}
