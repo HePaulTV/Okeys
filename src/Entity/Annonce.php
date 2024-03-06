@@ -38,8 +38,6 @@ class Annonce
     #[Groups(['annonce:list','annonce:item'])]
     private ?string $titre = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $image = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Groups(['annonce:list','annonce:item'])]
@@ -78,16 +76,24 @@ class Annonce
     private Collection $types;
 
     #[ORM\ManyToOne(inversedBy: 'annonces')]
+    #[Groups(['annonce:list','annonce:item'])]
+
     private ?Type $type = null;
 
     #[ORM\OneToMany(mappedBy: 'annonce', targetEntity: Visite::class)]
     #[Groups(['annonce:list','annonce:item'])]
     private Collection $visites;
 
+    #[ORM\OneToMany(mappedBy: 'annonce', targetEntity: Images::class)]
+    #[Groups(['annonce:list','annonce:item'])]
+    private Collection $images;
+
+
     public function __construct()
     {
         $this->types = new ArrayCollection();
         $this->visites = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -119,17 +125,6 @@ class Annonce
         return $this;
     }
 
-    public function getImage(): ?string
-    {
-        return $this->image;
-    }
-
-    public function setImage(string $image): static
-    {
-        $this->image = $image;
-
-        return $this;
-    }
 
     public function getDescription(): ?string
     {
@@ -298,4 +293,35 @@ class Annonce
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Images>
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Images $image): static
+    {
+        if (!$this->images->contains($image)) {
+            $this->images->add($image);
+            $image->setAnnonce($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Images $image): static
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getAnnonce() === $this) {
+                $image->setAnnonce(null);
+            }
+        }
+
+        return $this;
+    }
+
 }
