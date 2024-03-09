@@ -218,4 +218,21 @@ class BaseController extends AbstractController
             'visites' => $visites,
         ]);
     }
+    #[Route('/visite/delete/{id}', name: 'visite_delete')]
+    public function delete(Request $request, $id, EntityManagerInterface $entityManager): Response
+    {
+        $visite = $entityManager->getRepository(Visite::class)->find($id);
+    
+        if (!$visite) {
+            throw $this->createNotFoundException(
+                'No visite found for id '.$id
+            );
+        }
+    
+        $entityManager->remove($visite);
+        $entityManager->flush();
+    
+        // Redirection après suppression
+        return $this->redirectToRoute('profil');
+    }
 }
