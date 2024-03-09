@@ -110,7 +110,7 @@
 
     // Fonction pour récupérer les annonces depuis l'API
     function recupererAnnonces() {
-      fetch('https://s3-4733.nuage-peda.fr/Okeys/public/api/annonces?page=1')
+      fetch('/Okeys/public/api/annonces?page=1')
         .then(response => response.json())
         .then(data => {
           const annonces = data['hydra:member'];
@@ -129,7 +129,7 @@
       params.append('jardin', jardin);
       params.append('garage', garage);
 
-      fetch(`https://s3-4733.nuage-peda.fr/Okeys/public/api/annonces?page=1&${params.toString()}`)
+      fetch(`/Okeys/public/api/annonces?page=1&${params.toString()}`)
         .then(response => response.json())
         .then(data => {
           const annoncesFiltrees = data['hydra:member'];
