@@ -54,3 +54,26 @@
     </div>
 </div>
 {% endblock %}
+
+<!--<div class="container-fluid">
+		<div class="row justify-content-center">
+			<div class="col-10 climatecrisis text-P">
+				<ul>
+					<p>Vos visites</p>
+					{% for visite in visites %}
+						<li>
+							Visite à {{ visite.annonce.titre }} <br>le {{ visite.datetime|date('Y-m-d H:i') }}<br>
+							{% if visite.agent %}
+								- Agent: {{ visite.agent.nom }}<br><br>
+							{% endif %}
+							<form action="{{ path('visite_delete', {'id': visite.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette visite ?');">
+								<input type="submit" value="Supprimer">
+							</form>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+-->	
