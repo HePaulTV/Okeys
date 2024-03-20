@@ -34,12 +34,6 @@
                     <li class="nav-item">
                         <a class="nav-link text-B montserrat500" href="{{ path('recherche') }}">Rechercher</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-B montserrat500" href="{{ path('acheter') }}">Acheter</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-B montserrat500" href="{{ path('louer') }}">Louer</a>
-                    </li>
                     {% if is_granted('IS_AUTHENTICATED_FULLY')%}
                         <li class="nav-item">
                             <a class="nav-link text-B montserrat300" href="{{ path('contact') }}">Contact</a>

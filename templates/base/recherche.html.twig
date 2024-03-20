@@ -81,6 +81,7 @@
           <div class="carousel-item ${index === 0 ? 'active' : ''}">
             <img src="/Okeys/uploads/fichiers/${image.nom}" class="d-block card-img-top" alt="...">
           </div>`).join('');
+        const prixAffiche = annonce.type.nom === 'Louer' ? `${annonce.prix} €/Mois` : `${annonce.prix} €`;
         const cardHtml = `
           <div class="col mb-4">
             <div class="card">
@@ -99,7 +100,7 @@
               </div>
               <div class="card-body">
                 <h5 class="card-title text-A">${annonce.titre}</h5>
-                <p class="card-text">Prix: ${annonce.prix} €</p>
+                <p class="card-text">Prix: ${prixAffiche}</p>
                 <p class="card-text">${annonce.description}</p>
               </div>
             </div>

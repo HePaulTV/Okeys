@@ -66,14 +66,16 @@ document.addEventListener("DOMContentLoaded", function() {
     
     // Pas de changements ici, sauf l'ajout de la population comme paramètre
     function calculerEstimation(nombrePieces, surface, jardin, garage, fibre, population) {
-        let estimation = surface * 1000;
-        estimation += nombrePieces * 5000;
-        if (jardin) estimation += 10000;
-        if (garage) estimation += 5000;
+        let estimation = surface * 3000;
+        estimation += nombrePieces * 10000;
+        if (jardin) estimation += 50000;
+        if (garage) estimation += 15000;
         if (fibre) estimation += 2000;
         
-        if (population > 50000) {
-            estimation *= 1.2;
+        if (population > 100000) {
+            estimation *= 1.5;
+        } else if (population > 50000) {
+            estimation *= 1.3;
         } else if (population > 10000) {
             estimation *= 1.1;
         }

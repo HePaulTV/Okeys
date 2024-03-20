@@ -168,7 +168,7 @@ class BaseController extends AbstractController
     }
 
 
-    #[Route('/ajoutbien', name: 'ajoutbien')]
+    #[Route('/agent-ajoutbien', name: 'ajoutbien')]
     public function ajoutbien(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         // Créez un nouvel objet Annonce

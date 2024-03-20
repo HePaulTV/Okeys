@@ -72,12 +72,10 @@ class Annonce
     private ?string $departement = null;
 
     #[ORM\OneToMany(mappedBy: 'annonce', targetEntity: Type::class)]
-    //#[Groups(['annonce:list','annonce:item'])]
     private Collection $types;
 
     #[ORM\ManyToOne(inversedBy: 'annonces')]
     #[Groups(['annonce:list','annonce:item'])]
-
     private ?Type $type = null;
 
     #[ORM\OneToMany(mappedBy: 'annonce', targetEntity: Visite::class)]
